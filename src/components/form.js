@@ -7,6 +7,12 @@ export const Form = () => {
 
   function addToContact(event) {
     event.preventDefault();
+
+    if (name === "" || number === "") {
+      alert("Fill Required Details");
+      return;
+    }
+
     const newContact = {
       id: contacts.length + 1,
       name,
@@ -16,6 +22,11 @@ export const Form = () => {
     setContacts([...contacts, newContact]);
     setName("");
     setNumber("");
+  }
+
+  async function deleteContact(id) {
+    const newContact = contacts.filter((contact) => contact.id !== id);
+    setContacts(newContact);
   }
 
   return (
@@ -47,6 +58,12 @@ export const Form = () => {
             <li key={iterator.id}>
               <p>{iterator.name}</p>
               <p>{iterator.number}</p>
+              <button
+                type="button"
+                onClick={() => {
+                  deleteContact(iterator.id);
+                }}
+              ></button>
             </li>
           );
         })}
